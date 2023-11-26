@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="天地图"/>
+    <title>天地图－地图API－有限空间作业-标注</title>
+    <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=701640b81eacb6c191dd460f74393688"></script>
+    <style type="text/css">body,html{width:100%;height:100%;margin:0;font-family:"Microsoft YaHei"}#mapDiv{width:100%;height:100vh}input,b,p{margin-left:5px;font-size:14px}</style>
+    <script>
+        var map;
+        var zoom = 12;
+
+        var pointCoordinates = [
+    {"id": 1, "risk_level": "低风险", "longitude": 120.111844, "latitude": 30.42227},
+    {"id": 9, "risk_level": "低风险", "longitude": 120.121024, "latitude": 30.418358},
+    {"id": 26, "risk_level": "低风险", "longitude": 120.29798, "latitude": 30.44087},
+    {"id": 29, "risk_level": "低风险", "longitude": 120.229798, "latitude": 30.422006},
+    {"id": 30, "risk_level": "低风险", "longitude": 120.267906, "latitude": 30.436728},
+    {"id": 43, "risk_level": "低风险", "longitude": 120.252359, "latitude": 30.463507},
+    {"id": 44, "risk_level": "低风险", "longitude": 120.237808, "latitude": 30.431338},
+    {"id": 45, "risk_level": "低风险", "longitude": 120.30476, "latitude": 30.42415},
+    {"id": 46, "risk_level": "低风险", "longitude": 120.25017, "latitude": 30.46355},
+    {"id": 61, "risk_level": "低风险", "longitude": 120.200396, "latitude": 30.507319},
+    {"id": 65, "risk_level": "低风险", "longitude": 120.30883, "latitude": 30.44074},
+    {"id": 71, "risk_level": "低风险", "longitude": 120.23006, "latitude": 30.45826},
+    {"id": 77, "risk_level": "低风险", "longitude": 120.30883, "latitude": 30.44074},
+    {"id": 83, "risk_level": "低风险", "longitude": 120.1722, "latitude": 30.27058},
+    {"id": 90, "risk_level": "低风险", "longitude": 120.30883, "latitude": 30.44074},
+    {"id": 93, "risk_level": "低风险", "longitude": 120.2745114, "latitude": 30.44702692},
+    {"id": 94, "risk_level": "低风险", "longitude": 120.112707, "latitude": 30.368798},
+    {"id": 104, "risk_level": "低风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 107, "risk_level": "低风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 109, "risk_level": "低风险", "longitude": 120.30883, "latitude": 30.44074},
+    {"id": 113, "risk_level": "低风险", "longitude": 120.27236, "latitude": 30.4746},
+    {"id": 116, "risk_level": "低风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 124, "risk_level": "低风险", "longitude": 120.27594, "latitude": 30.47508},
+    {"id": 126, "risk_level": "低风险", "longitude": 120.31831, "latitude": 30.44772},
+    {"id": 134, "risk_level": "低风险", "longitude": 120.24171, "latitude": 30.46205},
+    {"id": 135, "risk_level": "低风险", "longitude": 120.29377, "latitude": 30.45624},
+    {"id": 138, "risk_level": "低风险", "longitude": 120.304941, "latitude": 30.448621},
+    {"id": 140, "risk_level": "低风险", "longitude": 120.267906, "latitude": 30.436728},
+    {"id": 141, "risk_level": "低风险", "longitude": 120.30041, "latitude": 30.43633},
+    {"id": 144, "risk_level": "低风险", "longitude": 120.249779, "latitude": 30.449637},
+    {"id": 145, "risk_level": "低风险", "longitude": 120.30361, "latitude": 30.43969},
+    {"id": 146, "risk_level": "低风险", "longitude": 120.30471, "latitude": 30.44259},
+    {"id": 153, "risk_level": "低风险", "longitude": 120.258353, "latitude": 30.427694},
+    {"id": 155, "risk_level": "低风险", "longitude": 120.24911, "latitude": 30.47108},
+    {"id": 156, "risk_level": "低风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 160, "risk_level": "低风险", "longitude": 120.315592, "latitude": 30.457118},
+    {"id": 162, "risk_level": "低风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 163, "risk_level": "低风险", "longitude": 120.3044, "latitude": 30.4488},
+    {"id": 166, "risk_level": "低风险", "longitude": 119.973729, "latitude": 30.276828},
+    {"id": 167, "risk_level": "低风险", "longitude": 120.29956, "latitude": 30.405625},
+    {"id": 169, "risk_level": "低风险", "longitude": 120.30666, "latitude": 30.4122},
+    {"id": 171, "risk_level": "低风险", "longitude": 120.25135, "latitude": 30.34438},
+    {"id": 174, "risk_level": "低风险", "longitude": 120.15908, "latitude": 30.37537},
+    {"id": 175, "risk_level": "低风险", "longitude": 120.200162, "latitude": 30.400761},
+    {"id": 176, "risk_level": "低风险", "longitude": 119.997, "latitude": 30.29219},
+    {"id": 179, "risk_level": "低风险", "longitude": 120.201808, "latitude": 30.47474},
+    {"id": 180, "risk_level": "低风险", "longitude": 120.214576, "latitude": 30.460482},
+    {"id": 181, "risk_level": "低风险", "longitude": 120.1906, "latitude": 30.40686},
+    {"id": 182, "risk_level": "低风险", "longitude": 120.166031, "latitude": 30.460655},
+    {"id": 185, "risk_level": "低风险", "longitude": 120.1715, "latitude": 30.47041},
+    {"id": 186, "risk_level": "低风险", "longitude": 120.17095, "latitude": 30.4571},
+    {"id": 187, "risk_level": "低风险", "longitude": 120.1576807, "latitude": 30.39961535},
+    {"id": 188, "risk_level": "低风险", "longitude": 120.16005, "latitude": 30.45537},
+    {"id": 193, "risk_level": "低风险", "longitude": 120.13619, "latitude": 30.432521},
+    {"id": 197, "risk_level": "低风险", "longitude": 120.18375, "latitude": 30.42786},
+    {"id": 201, "risk_level": "低风险", "longitude": 120.166031, "latitude": 30.460655},
+    {"id": 205, "risk_level": "低风险", "longitude": 120.147, "latitude": 30.434784},
+    {"id": 207, "risk_level": "低风险", "longitude": 120.18274, "latitude": 30.46781},
+    {"id": 208, "risk_level": "低风险", "longitude": 120.166031, "latitude": 30.460655},
+    {"id": 211, "risk_level": "低风险", "longitude": 120.166031, "latitude": 30.460655},
+    {"id": 215, "risk_level": "低风险", "longitude": 120.2067695, "latitude": 30.4307115},
+    {"id": 226, "risk_level": "低风险", "longitude": 120.24353, "latitude": 30.41268},
+    {"id": 233, "risk_level": "低风险", "longitude": 120.303126, "latitude": 30.495535},
+    {"id": 244, "risk_level": "低风险", "longitude": 120.17252, "latitude": 30.40756},
+    {"id": 248, "risk_level": "低风险", "longitude": 120.31253, "latitude": 30.44751},
+    {"id": 249, "risk_level": "低风险", "longitude": 120.2884, "latitude": 30.45418},
+    {"id": 258, "risk_level": "低风险", "longitude": 120.31723, "latitude": 30.45906},
+    {"id": 265, "risk_level": "低风险", "longitude": 120.25078, "latitude": 30.45145},
+    {"id": 275, "risk_level": "低风险", "longitude": 120.176398, "latitude": 30.399587},
+    {"id": 24, "risk_level": "高风险", "longitude": 120.19963, "latitude": 30.39943},
+    {"id": 164, "risk_level": "较大风险", "longitude": 105.922396, "latitude": 29.336862},
+    {"id": 274, "risk_level": "较大风险", "longitude": 120.1751, "latitude": 30.46924},
+    {"id": 8, "risk_level": "一般风险", "longitude": 120.151281, "latitude": 30.390334},
+    {"id": 16, "risk_level": "一般风险", "longitude": 120.11376, "latitude": 30.41601},
+    {"id": 21, "risk_level": "一般风险", "longitude": 120.11376, "latitude": 30.41601},
+    {"id": 22, "risk_level": "一般风险", "longitude": 120.130971, "latitude": 30.418003},
+    {"id": 34, "risk_level": "一般风险", "longitude": 120.18876, "latitude": 30.26054},
+    {"id": 36, "risk_level": "一般风险", "longitude": 120.15733, "latitude": 30.38539},
+    {"id": 39, "risk_level": "一般风险", "longitude": 120.18575, "latitude": 30.48376},
+    {"id": 40, "risk_level": "一般风险", "longitude": 120.25652, "latitude": 30.4051},
+    {"id": 58, "risk_level": "一般风险", "longitude": 120.16596, "latitude": 30.46296},
+    {"id": 62, "risk_level": "一般风险", "longitude": 120.16596, "latitude": 30.46296},
+    {"id": 66, "risk_level": "一般风险", "longitude": 120.28994, "latitude": 30.45877},
+    {"id": 73, "risk_level": "一般风险", "longitude": 120.24444, "latitude": 30.44387},
+    {"id": 85, "risk_level": "一般风险", "longitude": 120.24205, "latitude": 30.44511},
+    {"id": 88, "risk_level": "一般风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 97, "risk_level": "一般风险", "longitude": 120.28642, "latitude": 30.46234},
+    {"id": 99, "risk_level": "一般风险", "longitude": 120.231044, "latitude": 30.461363},
+    {"id": 114, "risk_level": "一般风险", "longitude": 120.28642, "latitude": 30.46234},
+    {"id": 136, "risk_level": "一般风险", "longitude": 120.28994, "latitude": 30.45877},
+    {"id": 137, "risk_level": "一般风险", "longitude": 120.315592, "latitude": 30.457118},
+    {"id": 147, "risk_level": "一般风险", "longitude": 120.29377, "latitude": 30.45624},
+    {"id": 165, "risk_level": "一般风险", "longitude": 120.29377, "latitude": 30.45624},
+    {"id": 184, "risk_level": "一般风险", "longitude": 120.16903, "latitude": 30.473},
+    {"id": 195, "risk_level": "一般风险", "longitude": 113.83556, "latitude": 22.80524},
+    {"id": 196, "risk_level": "一般风险", "longitude": 120.166031, "latitude": 30.460655},
+    {"id": 200, "risk_level": "一般风险", "longitude": 120.13619, "latitude": 30.432521},
+    {"id": 206, "risk_level": "一般风险", "longitude": 120.214576, "latitude": 30.460482},
+    {"id": 209, "risk_level": "一般风险", "longitude": 120.17922, "latitude": 30.46315},
+    {"id": 212, "risk_level": "一般风险", "longitude": 120.163063, "latitude": 30.453615},
+    {"id": 216, "risk_level": "一般风险", "longitude": 120.1714, "latitude": 30.47426},
+    {"id": 229, "risk_level": "一般风险", "longitude": 120.26167, "latitude": 30.48759},
+    {"id": 231, "risk_level": "一般风险", "longitude": 120.27133, "latitude": 30.49309},
+    {"id": 232, "risk_level": "一般风险", "longitude": 120.2671, "latitude": 30.49838},
+    {"id": 236, "risk_level": "一般风险", "longitude": 120.2691, "latitude": 30.45429},
+    {"id": 241, "risk_level": "一般风险", "longitude": 120.27246, "latitude": 30.496229},
+    {"id": 245, "risk_level": "一般风险", "longitude": 120.17922, "latitude": 30.46315},
+    {"id": 246, "risk_level": "一般风险", "longitude": 120.1403, "latitude": 30.40052},
+    {"id": 247, "risk_level": "一般风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 250, "risk_level": "一般风险", "longitude": 120.28232, "latitude": 30.46012},
+    {"id": 256, "risk_level": "一般风险", "longitude": 120.28023, "latitude": 30.44411},
+    {"id": 259, "risk_level": "一般风险", "longitude": 120.235447, "latitude": 30.488961},
+    {"id": 260, "risk_level": "一般风险", "longitude": 120.21379, "latitude": 30.49706}
+];
+        function onLoad() {
+            //初始化地图对象
+            map = new T.Map("mapDiv");
+            //设置显示地图的中心点和级别 120.2067695, "latitude": 30.4307115
+            map.centerAndZoom(new T.LngLat(120.2067695, 30.4307115), zoom);
+
+            var colorList = {
+                '低风险': '4',
+                '一般风险': '3',
+                '高风险': '1',
+                '较大风险': '2',
+            }
+
+            pointCoordinates.forEach(item => {
+                var icon = new T.Icon({
+                    iconUrl: `./img/point_risk${colorList[item.risk_level]}.png`,
+                    iconSize: new T.Point(26, 27),
+                    iconAnchor: new T.Point(10, 25)
+                });
+                let marker = new T.Marker(new T.LngLat(item.longitude, item.latitude),{icon});
+                map.addOverLay(marker);
+                let label = new T.Label({
+                    text: `${item.id}`,
+                    position: marker.getLngLat(),
+                    offset: new T.Point(-26, -38)
+                });
+                label.setFontSize(8)
+                label.setBorderLine(0)
+                map.addOverLay(label);
+            })
+        }
+    </script>
+</head>
+<body onLoad="onLoad()">
+<div id="mapDiv"></div>
+</body>
+</html>

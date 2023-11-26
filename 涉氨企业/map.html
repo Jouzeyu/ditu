@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="天地图"/>
+    <title>天地图－地图高涉氨企业-标注</title>
+    <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=701640b81eacb6c191dd460f74393688"></script>
+    <style type="text/css">body,html{width:100%;height:100%;margin:0;font-family:"Microsoft YaHei"}#mapDiv{width:100%;height:100vh}input,b,p{margin-left:5px;font-size:14px}</style>
+    <script>
+        var map;
+        var zoom = 12;
+
+        var pointCoordinates = [
+        {"id": 34, "risk_level": "一般风险", "longitude": 120.18876, "latitude": 30.26054},
+    {"id": 21, "risk_level": "一般风险", "longitude": 120.11376, "latitude": 30.41601},
+    {"id": 35, "risk_level": "一般风险", "longitude": 120.30025, "latitude": 30.43631},
+    {"id": 36, "risk_level": "一般风险", "longitude": 120.15733, "latitude": 30.38539},
+    {"id": 37, "risk_level": "一般风险", "longitude": 120.15623, "latitude": 30.46578},
+    {"id": 40, "risk_level": "一般风险", "longitude": 120.25652, "latitude": 30.4051},
+];
+        function onLoad() {
+            //初始化地图对象
+            map = new T.Map("mapDiv");
+            //设置显示地图的中心点和级别 120.2067695, "latitude": 30.4307115
+            map.centerAndZoom(new T.LngLat(120.2067695, 30.4307115), zoom);
+
+            var colorList = {
+                '低风险': '4',
+                '一般风险': '3',
+                '高风险': '1',
+                '较大风险': '2',
+            }
+
+            pointCoordinates.forEach(item => {
+                var icon = new T.Icon({
+                    iconUrl: `./img/point_risk${colorList[item.risk_level]}.png`,
+                    iconSize: new T.Point(26, 27),
+                    iconAnchor: new T.Point(10, 25)
+                });
+                let marker = new T.Marker(new T.LngLat(item.longitude, item.latitude),{icon});
+                map.addOverLay(marker);
+                let label = new T.Label({
+                    text: `${item.id}`,
+                    position: marker.getLngLat(),
+                    offset: new T.Point(-26, -38)
+                });
+                label.setFontSize(8)
+                label.setBorderLine(0)
+                map.addOverLay(label);
+            })
+        }
+    </script>
+</head>
+<body onLoad="onLoad()">
+<div id="mapDiv"></div>
+</body>
+</html>
